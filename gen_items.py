@@ -1,0 +1,1689 @@
+import json
+
+items = []
+
+# ============================================================
+# ANSWERABLE: single lookup (25 items, bwv2_051 to bwv2_075)
+# ============================================================
+
+items.append({
+    "id": "bwv2_051",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Name,Department,Salary\nAlice,Engineering,95000\nBob,Marketing,72000\nCarol,Engineering,88000\nDave,HR,65000",
+    "question": "What is Bob's salary?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["72000", "$72,000", "72,000"],
+    "reason": "Bob's salary is directly listed as 72000."
+})
+
+items.append({
+    "id": "bwv2_052",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Product,Category,Price\nLaptop,Electronics,1200\nDesk,Furniture,350\nPen,Stationery,2\nMonitor,Electronics,450",
+    "question": "What category does the Desk belong to?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Furniture", "furniture"],
+    "reason": "The Desk row shows Category = Furniture."
+})
+
+items.append({
+    "id": "bwv2_053",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Student,Grade,Score\nEma,A,92\nLiam,B,83\nNora,A,95\nOwen,C,74",
+    "question": "What score did Liam receive?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["83"],
+    "reason": "Liam's score is directly listed as 83."
+})
+
+items.append({
+    "id": "bwv2_054",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "City,Country,Population\nParis,France,2161000\nTokyo,Japan,13960000\nLagos,Nigeria,14862000\nLima,Peru,9751000",
+    "question": "Which country is Lima in?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Peru", "peru"],
+    "reason": "Lima's Country column shows Peru."
+})
+
+items.append({
+    "id": "bwv2_055",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Book,Author,Year,Genre\nDune,Frank Herbert,1965,SciFi\nNeuromancer,William Gibson,1984,SciFi\n1984,George Orwell,1949,Dystopia\nBrave New World,Aldous Huxley,1932,Dystopia",
+    "question": "What year was Neuromancer published?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["1984"],
+    "reason": "Neuromancer's Year column shows 1984."
+})
+
+items.append({
+    "id": "bwv2_056",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Flight,Origin,Destination,Duration\nAA101,New York,London,7h\nBA202,London,Dubai,7h\nEK303,Dubai,Sydney,14h\nQF404,Sydney,Los Angeles,15h",
+    "question": "What is the destination of flight EK303?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Sydney", "sydney"],
+    "reason": "EK303's Destination is directly listed as Sydney."
+})
+
+items.append({
+    "id": "bwv2_057",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Server,CPU,RAM_GB,Status\nalpha,Intel Xeon,64,Running\nbeta,AMD EPYC,128,Stopped\ngamma,Intel Xeon,32,Running\ndelta,AMD EPYC,64,Maintenance",
+    "question": "What is the status of the beta server?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Stopped", "stopped"],
+    "reason": "Beta server's Status is directly listed as Stopped."
+})
+
+items.append({
+    "id": "bwv2_058",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Athlete,Sport,Country,Medals\nUsain Bolt,Track,Jamaica,8\nMichael Phelps,Swimming,USA,23\nSimone Biles,Gymnastics,USA,7\nEliud Kipchoge,Marathon,Kenya,2",
+    "question": "How many medals does Michael Phelps have?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["23"],
+    "reason": "Michael Phelps' Medals column shows 23."
+})
+
+items.append({
+    "id": "bwv2_059",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Movie,Director,Year,Rating\nInception,Christopher Nolan,2010,8.8\nParasite,Bong Joon-ho,2019,8.5\nGet Out,Jordan Peele,2017,7.7\nMoonlight,Barry Jenkins,2016,7.4",
+    "question": "Who directed Parasite?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Bong Joon-ho", "Bong Joon Ho", "bong joon-ho"],
+    "reason": "Parasite's Director is listed as Bong Joon-ho."
+})
+
+items.append({
+    "id": "bwv2_060",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Country,Capital,GDP_trillion\nGermany,Berlin,4.2\nFrance,Paris,2.9\nItaly,Rome,2.1\nSpain,Madrid,1.4",
+    "question": "What is the capital of Germany?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Berlin", "berlin"],
+    "reason": "Germany's Capital is directly listed as Berlin."
+})
+
+items.append({
+    "id": "bwv2_061",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Employee,Role,Years,Team\nSara,Manager,5,Alpha\nTom,Engineer,3,Beta\nUma,Designer,7,Alpha\nVic,Engineer,2,Gamma",
+    "question": "How many years has Uma worked at the company?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["7"],
+    "reason": "Uma's Years column shows 7."
+})
+
+items.append({
+    "id": "bwv2_062",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Planet,Diameter_km,Moons,Rings\nMercury,4879,0,No\nVenus,12104,0,No\nEarth,12742,1,No\nMars,6779,2,No",
+    "question": "How many moons does Mars have?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["2"],
+    "reason": "Mars's Moons column shows 2."
+})
+
+items.append({
+    "id": "bwv2_063",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Restaurant,Cuisine,Rating,Price\nOlive Garden,Italian,3.8,$$\nSushi Palace,Japanese,4.5,$$$\nTaco Town,Mexican,4.1,$\nBurger Barn,American,3.5,$",
+    "question": "What cuisine does Sushi Palace serve?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Japanese", "japanese"],
+    "reason": "Sushi Palace's Cuisine is listed as Japanese."
+})
+
+items.append({
+    "id": "bwv2_064",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Item,Weight_kg,Color,Stock\nChair,8,Brown,50\nTable,25,Oak,20\nSofa,60,Grey,10\nLamp,3,White,100",
+    "question": "What color is the Sofa?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Grey", "grey", "Gray", "gray"],
+    "reason": "Sofa's Color is listed as Grey."
+})
+
+items.append({
+    "id": "bwv2_065",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Language,Creator,Year,Paradigm\nPython,Guido van Rossum,1991,Multi-paradigm\nJava,James Gosling,1995,OOP\nRust,Graydon Hoare,2010,Systems\nGo,Robert Griesemer,2009,Concurrent",
+    "question": "Who created the Go programming language?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Robert Griesemer", "robert griesemer"],
+    "reason": "Go's Creator is listed as Robert Griesemer."
+})
+
+items.append({
+    "id": "bwv2_066",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Patient,Age,Diagnosis,Ward\nAdams,45,Hypertension,Cardio\nBrown,32,Appendicitis,Surgery\nClark,67,Diabetes,Endocrine\nDavis,58,Pneumonia,Pulmonary",
+    "question": "What ward is patient Clark in?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Endocrine", "endocrine"],
+    "reason": "Clark's Ward is listed as Endocrine."
+})
+
+items.append({
+    "id": "bwv2_067",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Course,Instructor,Credits,Department\nCalc I,Dr. Smith,4,Math\nPhysics,Dr. Lee,3,Science\nHistory,Dr. Jones,3,Humanities\nEthics,Dr. Patel,2,Philosophy",
+    "question": "How many credits is Calc I worth?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["4"],
+    "reason": "Calc I's Credits column shows 4."
+})
+
+items.append({
+    "id": "bwv2_068",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Animal,Lifespan_yr,Habitat,Diet\nElephant,70,Savanna,Herbivore\nLion,16,Savanna,Carnivore\nDolphin,45,Ocean,Carnivore\nParrot,80,Rainforest,Omnivore",
+    "question": "What is the diet of a Lion?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Carnivore", "carnivore"],
+    "reason": "Lion's Diet column shows Carnivore."
+})
+
+items.append({
+    "id": "bwv2_069",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Project,Lead,Budget,Status\nAlpha,Alice,50000,Active\nBeta,Bob,120000,On Hold\nGamma,Carol,75000,Active\nDelta,Dave,30000,Completed",
+    "question": "What is the status of Project Delta?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Completed", "completed"],
+    "reason": "Project Delta's Status is listed as Completed."
+})
+
+items.append({
+    "id": "bwv2_070",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Vaccine,Disease,Efficacy,Doses\nMMR,Measles,97%,2\nFlu,Influenza,60%,1\nHPV,HPV,90%,2\nPolio,Poliomyelitis,99%,4",
+    "question": "How many doses is the Polio vaccine?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["4"],
+    "reason": "Polio vaccine's Doses column shows 4."
+})
+
+items.append({
+    "id": "bwv2_071",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Artist,Album,Year,Genre\nBeyonce,Lemonade,2016,R&B\nTaylor Swift,1989,2014,Pop\nKendrick Lamar,DAMN.,2017,Hip-Hop\nBillie Eilish,Happier Than Ever,2021,Pop",
+    "question": "What genre is Kendrick Lamar's album DAMN.?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Hip-Hop", "hip-hop", "Hip Hop", "hip hop"],
+    "reason": "DAMN. genre is listed as Hip-Hop."
+})
+
+items.append({
+    "id": "bwv2_072",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Store,Location,Revenue_M,Employees\nNorth,Downtown,12.5,45\nSouth,Suburb,8.3,32\nEast,Mall,15.7,60\nWest,Airport,6.1,28",
+    "question": "How many employees does the East store have?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["60"],
+    "reason": "East store's Employees column shows 60."
+})
+
+items.append({
+    "id": "bwv2_073",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Compound,Formula,Melting_C,State\nWater,H2O,0,Liquid\nSalt,NaCl,801,Solid\nEthanol,C2H5OH,-114,Liquid\nIron,Fe,1538,Solid",
+    "question": "What is the melting point of Salt in Celsius?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["801", "801 C", "801 degrees C"],
+    "reason": "Salt's Melting_C column shows 801."
+})
+
+items.append({
+    "id": "bwv2_074",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Team,Coach,Wins,Losses\nEagles,Martinez,14,3\nFalcons,Johnson,10,7\nHawks,Williams,8,9\nOwls,Davis,5,12",
+    "question": "Who is the coach of the Eagles?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Martinez", "martinez"],
+    "reason": "Eagles' Coach is listed as Martinez."
+})
+
+items.append({
+    "id": "bwv2_075",
+    "difficulty": "easy",
+    "label_type": "answerable",
+    "table_csv": "Drug,Class,Dosage_mg,Frequency\nAspirin,NSAID,325,Daily\nMetformin,Biguanide,500,Twice daily\nLisinopril,ACE inhibitor,10,Daily\nAmoxicillin,Antibiotic,500,Three times daily",
+    "question": "What class of drug is Metformin?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Biguanide", "biguanide"],
+    "reason": "Metformin's Class is listed as Biguanide."
+})
+
+# ============================================================
+# ANSWERABLE: filter+compare (25 items, bwv2_076 to bwv2_100)
+# ============================================================
+
+items.append({
+    "id": "bwv2_076",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Name,Department,Salary\nAlice,Engineering,95000\nBob,Marketing,72000\nCarol,Engineering,88000\nDave,HR,65000",
+    "question": "Which Engineering employee has a higher salary?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Alice", "alice"],
+    "reason": "Among Engineering employees (Alice 95000, Carol 88000), Alice has the higher salary."
+})
+
+items.append({
+    "id": "bwv2_077",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Product,Category,Price,Stock\nLaptop,Electronics,1200,30\nTablet,Electronics,450,80\nDesk,Furniture,350,15\nChair,Furniture,150,60",
+    "question": "Which Electronics product is cheaper?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Tablet", "tablet"],
+    "reason": "Among Electronics (Laptop 1200, Tablet 450), Tablet is cheaper."
+})
+
+items.append({
+    "id": "bwv2_078",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Student,Major,GPA,Year\nAna,CS,3.8,Junior\nBen,Math,3.5,Senior\nCia,CS,3.9,Sophomore\nDan,Physics,3.2,Junior",
+    "question": "Among CS majors, who has the higher GPA?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Cia", "cia"],
+    "reason": "CS majors are Ana (3.8) and Cia (3.9). Cia has the higher GPA."
+})
+
+items.append({
+    "id": "bwv2_079",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "City,Country,Population,Area_km2\nMadrid,Spain,3300000,604\nBarcelona,Spain,1620000,101\nSeville,Spain,690000,140\nValencia,Spain,800000,134",
+    "question": "Which Spanish city has the smallest population?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Seville", "seville"],
+    "reason": "Among Spanish cities, Seville has the smallest population at 690000."
+})
+
+items.append({
+    "id": "bwv2_080",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Employee,Role,Team,Salary\nEve,Engineer,Alpha,90000\nFrank,Manager,Beta,110000\nGina,Engineer,Beta,85000\nHank,Manager,Alpha,105000",
+    "question": "Which Manager earns less?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Hank", "hank"],
+    "reason": "Managers are Frank (110000) and Hank (105000). Hank earns less."
+})
+
+items.append({
+    "id": "bwv2_081",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Book,Author,Pages,Rating\nDune,Frank Herbert,412,4.7\nFoundation,Isaac Asimov,244,4.5\nHyperion,Dan Simmons,482,4.6\nEndymion,Dan Simmons,560,4.4",
+    "question": "Among Dan Simmons books, which has fewer pages?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Hyperion", "hyperion"],
+    "reason": "Dan Simmons books are Hyperion (482) and Endymion (560). Hyperion has fewer pages."
+})
+
+items.append({
+    "id": "bwv2_082",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Server,OS,RAM_GB,Uptime_days\nalpha,Linux,64,300\nbeta,Windows,128,45\ngamma,Linux,32,180\ndelta,Linux,96,220",
+    "question": "Among Linux servers, which has the most RAM?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["delta", "Delta"],
+    "reason": "Linux servers: alpha 64GB, gamma 32GB, delta 96GB. Delta has the most RAM."
+})
+
+items.append({
+    "id": "bwv2_083",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Flight,Airline,Duration_min,Price\nAA101,American,420,350\nDL202,Delta,390,420\nUA303,United,410,300\nSW404,Southwest,450,180",
+    "question": "Which flight is the cheapest?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["SW404", "sw404"],
+    "reason": "Prices: AA101=350, DL202=420, UA303=300, SW404=180. SW404 is cheapest."
+})
+
+items.append({
+    "id": "bwv2_084",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Athlete,Country,Event,Time_sec\nAdam,USA,100m,9.9\nBen,Jamaica,100m,9.7\nColin,UK,200m,19.8\nDan,USA,200m,19.5",
+    "question": "Among 100m runners, who ran faster?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Ben", "ben"],
+    "reason": "In 100m: Adam 9.9s, Ben 9.7s. Ben ran faster (lower time)."
+})
+
+items.append({
+    "id": "bwv2_085",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Restaurant,Type,Rating,Price\nLa Trattoria,Italian,4.6,$$$\nSakura,Japanese,4.8,$$$\nEl Rancho,Mexican,4.2,$$\nPad Thai,Thai,4.4,$$",
+    "question": "Among the $$$ restaurants, which has the higher rating?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Sakura", "sakura"],
+    "reason": "Among $$$ restaurants (La Trattoria 4.6, Sakura 4.8), Sakura has the higher rating."
+})
+
+items.append({
+    "id": "bwv2_086",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Country,Continent,GDP_trillion,Population_M\nBrazil,Americas,1.9,215\nArgentina,Americas,0.6,46\nChile,Americas,0.3,19\nColombia,Americas,0.3,51",
+    "question": "Which Americas country has the highest GDP?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Brazil", "brazil"],
+    "reason": "Among Americas countries, Brazil has GDP of 1.9 trillion, the highest."
+})
+
+items.append({
+    "id": "bwv2_087",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Model,Brand,Price,Battery_hr\nGalaxy S23,Samsung,800,22\niPhone 14,Apple,900,18\nPixel 7,Google,600,24\nOnePlus 11,OnePlus,500,20",
+    "question": "Which phone costs less than $700 and has the longest battery?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Pixel 7", "pixel 7"],
+    "reason": "Phones under $700: Pixel 7 (600, 24hr) and OnePlus 11 (500, 20hr). Pixel 7 has longer battery."
+})
+
+items.append({
+    "id": "bwv2_088",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Employee,Dept,Score,Level\nIvy,Sales,88,Senior\nJay,Sales,92,Junior\nKim,Tech,95,Senior\nLeo,Tech,78,Junior",
+    "question": "Among Senior employees, who has the highest score?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Kim", "kim"],
+    "reason": "Senior employees: Ivy (88) and Kim (95). Kim has the highest score."
+})
+
+items.append({
+    "id": "bwv2_089",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Planet,Diameter_km,Distance_AU,Gravity_ms2\nMercury,4879,0.39,3.7\nVenus,12104,0.72,8.9\nMars,6779,1.52,3.7\nJupiter,139820,5.20,24.8",
+    "question": "Which planet is closer to the Sun: Venus or Mars?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Venus", "venus"],
+    "reason": "Venus is at 0.72 AU, Mars at 1.52 AU. Venus is closer."
+})
+
+items.append({
+    "id": "bwv2_090",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Movie,Genre,Budget_M,Revenue_M\nAvengers,Action,356,2798\nFrozen,Animation,150,1276\nJoker,Drama,55,1079\nInterstellar,SciFi,165,701",
+    "question": "Which movie had the smallest budget?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Joker", "joker"],
+    "reason": "Budgets: Avengers 356M, Frozen 150M, Joker 55M, Interstellar 165M. Joker had the smallest."
+})
+
+items.append({
+    "id": "bwv2_091",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Store,Region,Revenue_M,Cost_M\nStore A,North,5.2,3.1\nStore B,South,4.8,2.9\nStore C,North,6.1,4.0\nStore D,South,3.5,2.1",
+    "question": "Which North region store has higher revenue?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Store C", "store c"],
+    "reason": "North stores: Store A (5.2M) and Store C (6.1M). Store C has higher revenue."
+})
+
+items.append({
+    "id": "bwv2_092",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Volcano,Country,Height_m,Last_Eruption\nEtna,Italy,3357,2023\nStromboli,Italy,924,2022\nVesuvius,Italy,1281,1944\nVulcano,Italy,500,1890",
+    "question": "Which Italian volcano is the tallest?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Etna", "etna"],
+    "reason": "Heights: Etna 3357m, Stromboli 924m, Vesuvius 1281m, Vulcano 500m. Etna is tallest."
+})
+
+items.append({
+    "id": "bwv2_093",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Drug,Category,Cost_USD,Effectiveness\nDrug A,Antibiotic,12,High\nDrug B,Antibiotic,45,High\nDrug C,Antifungal,30,Medium\nDrug D,Antifungal,60,High",
+    "question": "Among Antibiotic drugs with High effectiveness, which is cheaper?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Drug A", "drug a"],
+    "reason": "Antibiotics with High effectiveness: Drug A ($12) and Drug B ($45). Drug A is cheaper."
+})
+
+items.append({
+    "id": "bwv2_094",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Lake,Country,Area_km2,Depth_m\nSuperior,USA,82103,406\nMichigan,USA,57757,281\nHuron,USA,59596,229\nErie,USA,25655,64",
+    "question": "Which US lake has the largest area?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Superior", "superior", "Lake Superior"],
+    "reason": "Areas: Superior 82103, Michigan 57757, Huron 59596, Erie 25655. Superior is largest."
+})
+
+items.append({
+    "id": "bwv2_095",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "App,Platform,Downloads_M,Rating\nPhotoEdit,iOS,12,4.6\nPhotoEdit,Android,18,4.2\nVideoFX,iOS,8,4.8\nVideoFX,Android,22,4.1",
+    "question": "On iOS, which app has a higher rating?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["VideoFX", "videofx"],
+    "reason": "iOS apps: PhotoEdit (4.6) and VideoFX (4.8). VideoFX has higher rating."
+})
+
+items.append({
+    "id": "bwv2_096",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Employee,Shift,Hours,Overtime\nMia,Morning,8,0\nNick,Evening,8,2\nOlga,Morning,8,1\nPaul,Evening,8,0",
+    "question": "Among Morning shift workers, who worked more overtime?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Olga", "olga"],
+    "reason": "Morning workers: Mia (0 OT) and Olga (1 OT). Olga worked more overtime."
+})
+
+items.append({
+    "id": "bwv2_097",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Country,Sport,Gold,Silver,Bronze\nUSA,Track,5,3,2\nUSA,Swimming,8,6,4\nChina,Track,3,4,2\nChina,Swimming,4,3,5",
+    "question": "In Swimming, which country won more gold medals?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["USA", "usa"],
+    "reason": "Swimming golds: USA 8, China 4. USA won more."
+})
+
+items.append({
+    "id": "bwv2_098",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Machine,Type,Power_kW,Efficiency\nM1,Lathe,15,0.85\nM2,Lathe,22,0.78\nM3,Mill,18,0.90\nM4,Mill,12,0.82",
+    "question": "Among Mill machines, which is more efficient?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["M3", "m3"],
+    "reason": "Mill machines: M3 (0.90) and M4 (0.82). M3 is more efficient."
+})
+
+items.append({
+    "id": "bwv2_099",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Investor,Fund,Return_pct,Risk\nAlpha,Growth,12,High\nBeta,Growth,8,Medium\nGamma,Income,5,Low\nDelta,Income,6,Low",
+    "question": "Among Income fund investors, who has the higher return?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["Delta", "delta"],
+    "reason": "Income fund: Gamma (5%) and Delta (6%). Delta has higher return."
+})
+
+items.append({
+    "id": "bwv2_100",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Train,Route,Stops,Duration_min\nT101,North-South,8,45\nT202,North-South,5,30\nT303,East-West,6,40\nT404,East-West,4,25",
+    "question": "On the East-West route, which train has fewer stops?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["T404", "t404"],
+    "reason": "East-West trains: T303 (6 stops) and T404 (4 stops). T404 has fewer stops."
+})
+
+# ============================================================
+# ANSWERABLE: aggregation (25 items, bwv2_101 to bwv2_125)
+# ============================================================
+
+items.append({
+    "id": "bwv2_101",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Name,Department,Salary\nAlice,Engineering,95000\nBob,Marketing,72000\nCarol,Engineering,88000\nDave,HR,65000",
+    "question": "What is the total salary of all employees?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["320000", "320,000"],
+    "reason": "95000+72000+88000+65000=320000."
+})
+
+items.append({
+    "id": "bwv2_102",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Product,Category,Price,Stock\nLaptop,Electronics,1200,30\nTablet,Electronics,450,80\nDesk,Furniture,350,15\nChair,Furniture,150,60",
+    "question": "How many products are in the Electronics category?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["2"],
+    "reason": "Electronics products: Laptop and Tablet. Count = 2."
+})
+
+items.append({
+    "id": "bwv2_103",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Student,Score_Math,Score_English,Score_Science\nAna,88,92,85\nBen,75,80,90\nCia,95,88,92\nDan,70,75,78",
+    "question": "What is Ana's average score across all subjects?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["88.33", "88.3", "265/3"],
+    "reason": "(88+92+85)/3 = 265/3 = 88.33."
+})
+
+items.append({
+    "id": "bwv2_104",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "City,Country,Population\nMadrid,Spain,3300000\nBarcelona,Spain,1620000\nSeville,Spain,690000\nValencia,Spain,800000",
+    "question": "What is the total population of all Spanish cities listed?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["6410000", "6,410,000"],
+    "reason": "3300000+1620000+690000+800000=6410000."
+})
+
+items.append({
+    "id": "bwv2_105",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Employee,Role,Salary\nEve,Engineer,90000\nFrank,Manager,110000\nGina,Engineer,85000\nHank,Manager,105000",
+    "question": "How many Managers are in the table?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["2"],
+    "reason": "Managers are Frank and Hank. Count = 2."
+})
+
+items.append({
+    "id": "bwv2_106",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Month,Revenue,Expenses,Profit\nJan,50000,30000,20000\nFeb,55000,32000,23000\nMar,60000,35000,25000\nApr,58000,33000,25000",
+    "question": "What is the total revenue across all months?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["223000", "223,000"],
+    "reason": "50000+55000+60000+58000=223000."
+})
+
+items.append({
+    "id": "bwv2_107",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Runner,Country,Time_sec,Event\nAdam,USA,9.9,100m\nBen,Jamaica,9.7,100m\nColin,UK,19.8,200m\nDan,USA,19.5,200m",
+    "question": "How many runners are from the USA?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["2"],
+    "reason": "USA runners: Adam and Dan. Count = 2."
+})
+
+items.append({
+    "id": "bwv2_108",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Item,Weight_kg,Quantity,Price\nApple,0.2,50,0.5\nBanana,0.15,80,0.3\nCherry,0.01,200,0.1\nDate,0.05,120,1.2",
+    "question": "What is the total quantity of all items?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["450"],
+    "reason": "50+80+200+120=450."
+})
+
+items.append({
+    "id": "bwv2_109",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Project,Status,Budget\nAlpha,Active,50000\nBeta,On Hold,120000\nGamma,Active,75000\nDelta,Completed,30000",
+    "question": "What is the total budget of Active projects?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["125000", "125,000"],
+    "reason": "Active projects: Alpha (50000) and Gamma (75000). Total = 125000."
+})
+
+items.append({
+    "id": "bwv2_110",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Employee,Sales_Q1,Sales_Q2,Sales_Q3\nIvy,45000,52000,48000\nJay,38000,41000,55000\nKim,60000,58000,62000\nLeo,30000,35000,32000",
+    "question": "What is Kim's total sales across all quarters?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["180000", "180,000"],
+    "reason": "60000+58000+62000=180000."
+})
+
+items.append({
+    "id": "bwv2_111",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Server,RAM_GB,Storage_TB,CPU_cores\nalpha,64,2,16\nbeta,128,4,32\ngamma,32,1,8\ndelta,96,3,24",
+    "question": "What is the average RAM across all servers (in GB)?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["80", "80 GB", "80.0"],
+    "reason": "(64+128+32+96)/4 = 320/4 = 80 GB."
+})
+
+items.append({
+    "id": "bwv2_112",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Country,Gold,Silver,Bronze\nUSA,13,9,7\nChina,9,8,6\nGB,4,7,6\nAustralia,4,3,5",
+    "question": "What is the total medal count for USA?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["29"],
+    "reason": "13+9+7=29 medals for USA."
+})
+
+items.append({
+    "id": "bwv2_113",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Store,Region,Revenue_M\nStore A,North,5.2\nStore B,South,4.8\nStore C,North,6.1\nStore D,South,3.5",
+    "question": "What is the total revenue for South region stores?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["8.3", "8.3M", "8,300,000"],
+    "reason": "South stores: B (4.8) and D (3.5). Total = 8.3M."
+})
+
+items.append({
+    "id": "bwv2_114",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Participant,Score_R1,Score_R2,Score_R3\nAlex,85,90,88\nBlair,78,82,80\nCasey,92,95,91\nDrew,70,74,72",
+    "question": "How many participants scored above 80 in Round 1?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["2"],
+    "reason": "Round 1 scores: Alex 85, Blair 78, Casey 92, Drew 70. Above 80: Alex and Casey = 2."
+})
+
+items.append({
+    "id": "bwv2_115",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Product,Sales_Jan,Sales_Feb,Sales_Mar\nWidget A,200,250,220\nWidget B,150,180,160\nWidget C,300,320,310\nWidget D,100,120,110",
+    "question": "What is Widget C's average monthly sales?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["310", "310.0"],
+    "reason": "(300+320+310)/3 = 930/3 = 310."
+})
+
+items.append({
+    "id": "bwv2_116",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Team,Wins,Draws,Losses\nEagles,14,2,1\nFalcons,10,3,4\nHawks,8,4,5\nOwls,5,2,10",
+    "question": "How many total games did the Falcons play?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["17"],
+    "reason": "10+3+4=17 games for Falcons."
+})
+
+items.append({
+    "id": "bwv2_117",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Year,Q1,Q2,Q3,Q4\n2021,120,135,140,150\n2022,130,145,155,165\n2023,140,160,170,180\n2024,155,175,180,190",
+    "question": "What is the total for all quarters in 2022?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["595"],
+    "reason": "130+145+155+165=595."
+})
+
+items.append({
+    "id": "bwv2_118",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Bug,Severity,Status,Assignee\nBUG-1,High,Open,Alice\nBUG-2,Low,Closed,Bob\nBUG-3,High,Open,Alice\nBUG-4,Medium,Open,Carol",
+    "question": "How many Open bugs are there?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["3"],
+    "reason": "Open bugs: BUG-1, BUG-3, BUG-4 = 3."
+})
+
+items.append({
+    "id": "bwv2_119",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Flight,Passengers,Cargo_kg,Fuel_L\nAA101,180,2500,35000\nBA202,220,3100,42000\nEK303,350,5000,68000\nQF404,270,3800,52000",
+    "question": "What is the average number of passengers per flight?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["255", "255.0"],
+    "reason": "(180+220+350+270)/4 = 1020/4 = 255."
+})
+
+items.append({
+    "id": "bwv2_120",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Department,Headcount,Budget_K,Projects\nEngineering,25,500,8\nMarketing,12,200,5\nHR,8,100,3\nSales,30,400,6",
+    "question": "What is the total headcount across all departments?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["75"],
+    "reason": "25+12+8+30=75."
+})
+
+items.append({
+    "id": "bwv2_121",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Country,Exports_B,Imports_B,Trade_Balance_B\nGermany,1600,1400,200\nChina,3000,2500,500\nUSA,2000,2800,-800\nJapan,800,750,50",
+    "question": "How many countries have a positive trade balance?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["3"],
+    "reason": "Positive trade balance: Germany (200), China (500), Japan (50) = 3 countries."
+})
+
+items.append({
+    "id": "bwv2_122",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Patient,Age,Diagnosis,LOS_days\nAdams,45,Hypertension,3\nBrown,32,Appendicitis,5\nClark,67,Diabetes,7\nDavis,58,Pneumonia,10",
+    "question": "What is the average length of stay (in days)?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["6.25", "6.25 days"],
+    "reason": "(3+5+7+10)/4 = 25/4 = 6.25 days."
+})
+
+items.append({
+    "id": "bwv2_123",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Sensor,Readings,Errors,Accuracy\nS1,1000,10,99%\nS2,1000,25,97.5%\nS3,1000,5,99.5%\nS4,1000,40,96%",
+    "question": "What is the total number of errors across all sensors?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["80"],
+    "reason": "10+25+5+40=80 errors."
+})
+
+items.append({
+    "id": "bwv2_124",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Category,Items_Sold,Revenue,Returns\nClothing,500,25000,30\nElectronics,200,80000,15\nBooks,800,16000,20\nToys,350,14000,25",
+    "question": "How many categories had more than 300 items sold?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["3"],
+    "reason": "Clothing 500, Books 800, Toys 350 all exceed 300. Count = 3."
+})
+
+items.append({
+    "id": "bwv2_125",
+    "difficulty": "medium",
+    "label_type": "answerable",
+    "table_csv": "Employee,Bonus_Q1,Bonus_Q2,Bonus_Q3,Bonus_Q4\nMia,1000,1500,1200,1800\nNick,800,900,1000,1100\nOlga,2000,2200,2100,2400\nPaul,500,600,550,700",
+    "question": "What is the total annual bonus for Nick?",
+    "gold_decision": "answer",
+    "acceptable_answers": ["3800", "3,800"],
+    "reason": "800+900+1000+1100=3800."
+})
+
+# ============================================================
+# UNANSWERABLE: missing_value (15 items, bwv2_126 to bwv2_140)
+# ============================================================
+
+items.append({
+    "id": "bwv2_126",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Name,Department,Salary\nAlice,Engineering,95000\nBob,Marketing,\nCarol,Engineering,88000\nDave,HR,65000",
+    "question": "What is the total salary of all employees?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Bob's salary is missing, making the total salary incalculable."
+})
+
+items.append({
+    "id": "bwv2_127",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Product,Category,Price,Stock\nLaptop,Electronics,1200,\nTablet,Electronics,450,80\nDesk,Furniture,350,15\nChair,Furniture,150,60",
+    "question": "What is the total number of units in stock?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Laptop's stock is missing, so total stock cannot be calculated."
+})
+
+items.append({
+    "id": "bwv2_128",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Student,Score_Math,Score_English,Score_Science\nAna,88,,85\nBen,75,80,90\nCia,95,88,92\nDan,70,75,78",
+    "question": "What is Ana's average score?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Ana's English score is missing, making her average incalculable."
+})
+
+items.append({
+    "id": "bwv2_129",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Flight,Airline,Duration_min,Price\nAA101,American,,350\nDL202,Delta,390,420\nUA303,United,410,300\nSW404,Southwest,450,180",
+    "question": "What is the average flight duration?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "AA101's duration is missing, making the average duration incalculable."
+})
+
+items.append({
+    "id": "bwv2_130",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Employee,Role,Salary\nEve,Engineer,90000\nFrank,Manager,\nGina,Engineer,85000\nHank,Manager,105000",
+    "question": "What is the average Manager salary?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Frank's salary is missing, making average Manager salary incalculable."
+})
+
+items.append({
+    "id": "bwv2_131",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "City,Country,Population,Area_km2\nMadrid,Spain,3300000,604\nBarcelona,Spain,,101\nSeville,Spain,690000,140\nValencia,Spain,800000,134",
+    "question": "What is the total population of all listed Spanish cities?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Barcelona's population is missing, making the total incalculable."
+})
+
+items.append({
+    "id": "bwv2_132",
+    "difficulty": "hard",
+    "label_type": "unanswerable",
+    "table_csv": "Book,Author,Pages,Rating\nDune,Frank Herbert,412,\nFoundation,Isaac Asimov,244,4.5\nHyperion,Dan Simmons,482,4.6\nEndymion,Dan Simmons,560,4.4",
+    "question": "What is the average rating of all books?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Dune's rating is missing, so the average rating cannot be calculated."
+})
+
+items.append({
+    "id": "bwv2_133",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Athlete,Event,Distance_m,Time_sec\nAdam,Sprint,,9.9\nBen,Sprint,100,9.7\nColin,Hurdles,110,13.2\nDan,Hurdles,110,13.5",
+    "question": "At what speed did Adam run (in m/s)?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Adam's distance is missing, making his speed incalculable."
+})
+
+items.append({
+    "id": "bwv2_134",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Server,RAM_GB,Storage_TB,Monthly_Cost\nalpha,64,2,800\nbeta,128,4,\ngamma,32,1,400\ndelta,96,3,700",
+    "question": "What is the total monthly cost for all servers?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Beta server's monthly cost is missing, making the total incalculable."
+})
+
+items.append({
+    "id": "bwv2_135",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Country,Gold,Silver,Bronze\nUSA,13,9,7\nChina,9,,6\nGB,4,7,6\nAustralia,4,3,5",
+    "question": "What is China's total medal count?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "China's Silver medal count is missing, making the total incalculable."
+})
+
+items.append({
+    "id": "bwv2_136",
+    "difficulty": "hard",
+    "label_type": "unanswerable",
+    "table_csv": "Drug,Dosage_mg,Price_USD,Quantity\nAspirin,325,5,100\nMetformin,,12,200\nLisinopril,10,8,150\nAmoxicillin,500,15,80",
+    "question": "What is Metformin's dosage?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Metformin's dosage is missing from the table."
+})
+
+items.append({
+    "id": "bwv2_137",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Employee,Q1_Sales,Q2_Sales,Q3_Sales,Q4_Sales\nMia,45000,52000,,48000\nNick,38000,41000,55000,60000\nOlga,60000,58000,62000,65000",
+    "question": "What is Mia's total annual sales?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Mia's Q3 sales figure is missing, making her annual total incalculable."
+})
+
+items.append({
+    "id": "bwv2_138",
+    "difficulty": "hard",
+    "label_type": "unanswerable",
+    "table_csv": "Project,Lead,Budget,Spent\nAlpha,Alice,50000,30000\nBeta,Bob,120000,\nGamma,Carol,75000,50000\nDelta,Dave,30000,28000",
+    "question": "What percentage of Beta's budget has been spent?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Beta's Spent value is missing, making the percentage incalculable."
+})
+
+items.append({
+    "id": "bwv2_139",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Sensor,Min_Temp,Max_Temp,Location\nS1,20,80,Lab A\nS2,,75,Lab B\nS3,18,90,Lab A\nS4,15,70,Lab C",
+    "question": "What is the minimum temperature recorded by S2?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "S2's Min_Temp value is missing from the table."
+})
+
+items.append({
+    "id": "bwv2_140",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Movie,Director,Budget_M,Revenue_M\nAvengers,Russo,356,2798\nFrozen,Buck,150,1276\nJoker,Phillips,,1079\nInterstellar,Nolan,165,701",
+    "question": "What was Joker's return on investment (revenue/budget)?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Joker's budget is missing, making ROI incalculable."
+})
+
+# ============================================================
+# UNANSWERABLE: no_satisfying_row (15 items, bwv2_141 to bwv2_155)
+# ============================================================
+
+items.append({
+    "id": "bwv2_141",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Name,Department,Salary\nAlice,Engineering,95000\nBob,Marketing,72000\nCarol,Engineering,88000\nDave,HR,65000",
+    "question": "What is the salary of the Finance employee?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "No employee is in the Finance department."
+})
+
+items.append({
+    "id": "bwv2_142",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Product,Category,Price\nLaptop,Electronics,1200\nTablet,Electronics,450\nDesk,Furniture,350\nChair,Furniture,150",
+    "question": "What is the price of the Sports product?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "No product belongs to the Sports category."
+})
+
+items.append({
+    "id": "bwv2_143",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Student,Grade,Score\nAna,A,92\nBen,B,83\nCia,A,95\nDan,C,74",
+    "question": "Which student received a grade of D?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "No student received a grade of D."
+})
+
+items.append({
+    "id": "bwv2_144",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "City,Country,Population\nParis,France,2161000\nTokyo,Japan,13960000\nLagos,Nigeria,14862000\nLima,Peru,9751000",
+    "question": "Which city in Germany has the largest population?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "No German city appears in the table."
+})
+
+items.append({
+    "id": "bwv2_145",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Employee,Role,Salary\nEve,Engineer,90000\nFrank,Manager,110000\nGina,Engineer,85000\nHank,Manager,105000",
+    "question": "Who is the Designer in the team?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "No employee has the role of Designer."
+})
+
+items.append({
+    "id": "bwv2_146",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Book,Author,Pages,Genre\nDune,Frank Herbert,412,SciFi\nFoundation,Isaac Asimov,244,SciFi\nHyperion,Dan Simmons,482,SciFi\nEndymion,Dan Simmons,560,SciFi",
+    "question": "Which Fantasy book has the most pages?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "No Fantasy genre book is listed; all are SciFi."
+})
+
+items.append({
+    "id": "bwv2_147",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Flight,Airline,Duration_min,Price\nAA101,American,420,350\nDL202,Delta,390,420\nUA303,United,410,300\nSW404,Southwest,450,180",
+    "question": "Which flight costs less than $100?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "No flight has a price below $100; the cheapest is $180."
+})
+
+items.append({
+    "id": "bwv2_148",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Server,OS,RAM_GB,Status\nalpha,Linux,64,Running\nbeta,Windows,128,Stopped\ngamma,Linux,32,Running\ndelta,Linux,96,Running",
+    "question": "Which Windows server is Running?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "The only Windows server (beta) is Stopped, not Running."
+})
+
+items.append({
+    "id": "bwv2_149",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Athlete,Sport,Country,Medals\nUsain Bolt,Track,Jamaica,8\nMichael Phelps,Swimming,USA,23\nSimone Biles,Gymnastics,USA,7\nEliud Kipchoge,Marathon,Kenya,2",
+    "question": "Which Canadian athlete is in the table?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "No Canadian athlete appears in the table."
+})
+
+items.append({
+    "id": "bwv2_150",
+    "difficulty": "hard",
+    "label_type": "unanswerable",
+    "table_csv": "Patient,Age,Diagnosis,Ward\nAdams,45,Hypertension,Cardio\nBrown,32,Appendicitis,Surgery\nClark,67,Diabetes,Endocrine\nDavis,58,Pneumonia,Pulmonary",
+    "question": "Which patient in the Neurology ward has diabetes?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "No patient is in the Neurology ward; Clark has Diabetes but is in Endocrine ward."
+})
+
+items.append({
+    "id": "bwv2_151",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Restaurant,Cuisine,Rating,Price\nLa Trattoria,Italian,4.6,$$$\nSakura,Japanese,4.8,$$$\nEl Rancho,Mexican,4.2,$$\nPad Thai,Thai,4.4,$$",
+    "question": "Which $ (budget) restaurant has a rating above 4.5?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "There is no $ (single dollar sign) restaurant; the cheaper category is $$ and none rate above 4.5."
+})
+
+items.append({
+    "id": "bwv2_152",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Model,Brand,Price,Battery_hr\nGalaxy S23,Samsung,800,22\niPhone 14,Apple,900,18\nPixel 7,Google,600,24\nOnePlus 11,OnePlus,500,20",
+    "question": "Which phone has a battery life over 30 hours?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "No phone in the table has battery life over 30 hours; max is 24 hours."
+})
+
+items.append({
+    "id": "bwv2_153",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Country,Capital,GDP_trillion\nGermany,Berlin,4.2\nFrance,Paris,2.9\nItaly,Rome,2.1\nSpain,Madrid,1.4",
+    "question": "Which country has a GDP over 5 trillion?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "No country in the table has a GDP above 5 trillion; the highest is 4.2."
+})
+
+items.append({
+    "id": "bwv2_154",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Team,Coach,Wins,Losses\nEagles,Martinez,14,3\nFalcons,Johnson,10,7\nHawks,Williams,8,9\nOwls,Davis,5,12",
+    "question": "Which team coached by Smith has the most wins?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "No team is coached by Smith."
+})
+
+items.append({
+    "id": "bwv2_155",
+    "difficulty": "hard",
+    "label_type": "unanswerable",
+    "table_csv": "Language,Creator,Year,Paradigm\nPython,Guido van Rossum,1991,Multi-paradigm\nJava,James Gosling,1995,OOP\nRust,Graydon Hoare,2010,Systems\nGo,Robert Griesemer,2009,Concurrent",
+    "question": "Which OOP language was created before 1990?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Java is the only OOP language but was created in 1995, not before 1990."
+})
+
+# ============================================================
+# UNANSWERABLE: tie (15 items, bwv2_156 to bwv2_170)
+# ============================================================
+
+items.append({
+    "id": "bwv2_156",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Name,Department,Salary\nAlice,Engineering,95000\nBob,Marketing,95000\nCarol,Engineering,88000\nDave,HR,65000",
+    "question": "Which employee has the highest salary?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Alice and Bob both have salaries of 95000; there is a tie for the highest."
+})
+
+items.append({
+    "id": "bwv2_157",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Product,Category,Rating\nLaptop,Electronics,4.5\nTablet,Electronics,4.5\nDesk,Furniture,4.2\nChair,Furniture,4.0",
+    "question": "Which product has the highest rating?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Laptop and Tablet both have a rating of 4.5; there is a tie."
+})
+
+items.append({
+    "id": "bwv2_158",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Student,Grade,Score\nAna,A,92\nBen,B,83\nCia,A,92\nDan,C,74",
+    "question": "Which student has the highest score?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Ana and Cia both scored 92; there is a tie for the highest."
+})
+
+items.append({
+    "id": "bwv2_159",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Team,Wins,Draws,Losses\nEagles,12,2,3\nFalcons,12,1,4\nHawks,8,4,5\nOwls,5,2,10",
+    "question": "Which team has the most wins?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Eagles and Falcons both have 12 wins; there is a tie."
+})
+
+items.append({
+    "id": "bwv2_160",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Server,OS,RAM_GB,Uptime_days\nalpha,Linux,64,200\nbeta,Windows,128,200\ngamma,Linux,32,180\ndelta,Linux,96,220",
+    "question": "Which is the unique server with exactly 200 days of uptime?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Alpha and beta both have 200 days uptime; there is a tie, no unique answer."
+})
+
+items.append({
+    "id": "bwv2_161",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "City,Country,Population\nMadrid,Spain,3300000\nBarcelona,Spain,1620000\nSeville,Spain,690000\nValencia,Spain,690000",
+    "question": "Which Spanish city has the smallest population?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Seville and Valencia both have a population of 690000; there is a tie for smallest."
+})
+
+items.append({
+    "id": "bwv2_162",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Runner,Country,Time_sec,Event\nAdam,USA,9.9,100m\nBen,Jamaica,9.9,100m\nColin,UK,19.8,200m\nDan,USA,19.5,200m",
+    "question": "Who won the 100m race?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Adam and Ben both ran 100m in 9.9 seconds; there is a tie."
+})
+
+items.append({
+    "id": "bwv2_163",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Book,Author,Rating\nDune,Frank Herbert,4.7\nFoundation,Isaac Asimov,4.5\nHyperion,Dan Simmons,4.7\nEndymion,Dan Simmons,4.4",
+    "question": "Which book has the highest rating?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Dune and Hyperion both have a rating of 4.7; there is a tie."
+})
+
+items.append({
+    "id": "bwv2_164",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Flight,Airline,Price\nAA101,American,350\nDL202,Delta,350\nUA303,United,300\nSW404,Southwest,180",
+    "question": "Which is the most expensive flight?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "AA101 and DL202 both cost $350; there is a tie for most expensive."
+})
+
+items.append({
+    "id": "bwv2_165",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Employee,Dept,Score\nIvy,Sales,90\nJay,Sales,85\nKim,Tech,90\nLeo,Tech,78",
+    "question": "Who has the highest performance score overall?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Ivy and Kim both have a score of 90; there is a tie."
+})
+
+items.append({
+    "id": "bwv2_166",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Country,Capital,GDP_trillion\nGermany,Berlin,4.2\nFrance,Paris,2.9\nItaly,Rome,2.9\nSpain,Madrid,1.4",
+    "question": "Which country has the second-highest GDP?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "France and Italy both have a GDP of 2.9 trillion; there is a tie for second place."
+})
+
+items.append({
+    "id": "bwv2_167",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Model,Brand,Battery_hr\nGalaxy S23,Samsung,22\niPhone 14,Apple,18\nPixel 7,Google,22\nOnePlus 11,OnePlus,20",
+    "question": "Which phone has the longest battery life?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Galaxy S23 and Pixel 7 both have 22 hours battery; there is a tie."
+})
+
+items.append({
+    "id": "bwv2_168",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Restaurant,Cuisine,Rating\nLa Trattoria,Italian,4.6\nSakura,Japanese,4.8\nEl Rancho,Mexican,4.6\nPad Thai,Thai,4.4",
+    "question": "Which restaurant has the second-highest rating?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "La Trattoria and El Rancho both have a rating of 4.6; there is a tie for second highest."
+})
+
+items.append({
+    "id": "bwv2_169",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Planet,Diameter_km,Gravity_ms2\nMercury,4879,3.7\nVenus,12104,8.9\nMars,6779,3.7\nJupiter,139820,24.8",
+    "question": "Which planet has the lowest gravity?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Mercury and Mars both have gravity of 3.7 m/s2; there is a tie."
+})
+
+items.append({
+    "id": "bwv2_170",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Drug,Class,Cost_USD\nAspirin,NSAID,5\nIbuprofen,NSAID,5\nLisinopril,ACE inhibitor,8\nAmoxicillin,Antibiotic,15",
+    "question": "Which NSAID drug is cheaper?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Aspirin and Ibuprofen both cost $5; there is a tie among NSAIDs."
+})
+
+# ============================================================
+# UNANSWERABLE: ordering_ambiguity (15 items, bwv2_171 to bwv2_185)
+# ============================================================
+
+items.append({
+    "id": "bwv2_171",
+    "difficulty": "hard",
+    "label_type": "unanswerable",
+    "table_csv": "Employee,Skills,Performance\nAlice,Python,Good\nBob,Java,Good\nCarol,Python,Excellent\nDave,Java,Good",
+    "question": "Who is the best programmer overall?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "The table provides no numerical rank or composite score; best programmer cannot be determined from categorical data alone."
+})
+
+items.append({
+    "id": "bwv2_172",
+    "difficulty": "hard",
+    "label_type": "unanswerable",
+    "table_csv": "Product,Quality,Price\nWidget A,High,50\nWidget B,Medium,30\nWidget C,High,40\nWidget D,Low,20",
+    "question": "Which product offers the best value?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Best value requires combining quality and price with a weighting not defined in the table."
+})
+
+items.append({
+    "id": "bwv2_173",
+    "difficulty": "hard",
+    "label_type": "unanswerable",
+    "table_csv": "City,Safety,Affordability,Culture\nCity A,High,Low,High\nCity B,Medium,High,Medium\nCity C,Low,Medium,High\nCity D,High,High,Low",
+    "question": "Which is the best city to live in?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "The table has three categorical criteria with no defined weighting; overall ranking is ambiguous."
+})
+
+items.append({
+    "id": "bwv2_174",
+    "difficulty": "hard",
+    "label_type": "unanswerable",
+    "table_csv": "Candidate,Experience,Education,Interview_Score\nAnna,Senior,PhD,7\nBrian,Junior,MSc,9\nClaire,Senior,BSc,8\nDon,Junior,PhD,8",
+    "question": "Which candidate is the most qualified?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Qualifications span experience, education, and interview score with no defined aggregation; ranking is ambiguous."
+})
+
+items.append({
+    "id": "bwv2_175",
+    "difficulty": "hard",
+    "label_type": "unanswerable",
+    "table_csv": "Car,Speed,Fuel_Efficiency,Safety_Rating\nCar A,Fast,Poor,5\nCar B,Slow,Excellent,4\nCar C,Medium,Good,5\nCar D,Fast,Good,3",
+    "question": "Which is the best car to buy?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Speed, fuel efficiency, and safety have no combined ranking formula; the best car depends on undefined priorities."
+})
+
+items.append({
+    "id": "bwv2_176",
+    "difficulty": "hard",
+    "label_type": "unanswerable",
+    "table_csv": "Restaurant,Food_Quality,Service,Ambience\nPlace A,Excellent,Good,Fair\nPlace B,Good,Excellent,Good\nPlace C,Fair,Good,Excellent\nPlace D,Good,Good,Good",
+    "question": "Which restaurant should I choose for the best dining experience?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "The overall dining experience depends on preference weights for food, service, and ambience, which are not defined."
+})
+
+items.append({
+    "id": "bwv2_177",
+    "difficulty": "hard",
+    "label_type": "unanswerable",
+    "table_csv": "Athlete,Speed_rank,Strength_rank,Endurance_rank\nAlex,1,3,2\nBen,2,1,3\nCasey,3,2,1\nDawn,4,4,4",
+    "question": "Which athlete is the best overall?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Alex, Ben, and Casey each top a different category; no overall ranking formula is specified."
+})
+
+items.append({
+    "id": "bwv2_178",
+    "difficulty": "hard",
+    "label_type": "unanswerable",
+    "table_csv": "University,Research,Teaching,Facilities\nUni A,Excellent,Good,Fair\nUni B,Good,Excellent,Good\nUni C,Good,Good,Excellent\nUni D,Fair,Fair,Good",
+    "question": "Which university should a student choose?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Choice depends on personal priorities among research, teaching, and facilities, which are not weighted."
+})
+
+items.append({
+    "id": "bwv2_179",
+    "difficulty": "hard",
+    "label_type": "unanswerable",
+    "table_csv": "Investment,Return_pct,Risk,Liquidity\nBonds,4,Low,High\nStocks,12,High,High\nReal Estate,8,Medium,Low\nGold,6,Low,Medium",
+    "question": "Which investment option is the best?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Best investment depends on personal risk tolerance and liquidity needs, which are not defined in the table."
+})
+
+items.append({
+    "id": "bwv2_180",
+    "difficulty": "hard",
+    "label_type": "unanswerable",
+    "table_csv": "Software,Features,Ease_of_Use,Cost\nApp A,Many,Hard,Free\nApp B,Few,Easy,$10/mo\nApp C,Many,Medium,$5/mo\nApp D,Medium,Easy,Free",
+    "question": "Which software is the best choice?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "The best choice depends on preferences for features, ease, and budget with no defined weighting."
+})
+
+items.append({
+    "id": "bwv2_181",
+    "difficulty": "hard",
+    "label_type": "unanswerable",
+    "table_csv": "Hospital,Wait_Time,Success_Rate,Cost\nHosp A,Short,High,High\nHosp B,Long,Very High,Low\nHosp C,Medium,High,Medium\nHosp D,Short,Medium,Low",
+    "question": "Which hospital is the best to visit?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Trade-offs between wait time, success rate, and cost are not resolved without a preference ordering."
+})
+
+items.append({
+    "id": "bwv2_182",
+    "difficulty": "hard",
+    "label_type": "unanswerable",
+    "table_csv": "Strategy,Win_Rate,Risk,Complexity\nS1,60%,High,Low\nS2,55%,Low,High\nS3,58%,Medium,Medium\nS4,62%,Very High,Low",
+    "question": "Which strategy should be used?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "The best strategy depends on risk appetite and complexity tolerance, which are undefined."
+})
+
+items.append({
+    "id": "bwv2_183",
+    "difficulty": "hard",
+    "label_type": "unanswerable",
+    "table_csv": "Candidate,Policy_A,Policy_B,Policy_C\nCandidate X,Supports,Opposes,Neutral\nCandidate Y,Opposes,Supports,Supports\nCandidate Z,Supports,Supports,Opposes\nCandidate W,Neutral,Neutral,Supports",
+    "question": "Which candidate should I vote for?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Vote choice depends on the voter's policy priorities, which are not specified in the table."
+})
+
+items.append({
+    "id": "bwv2_184",
+    "difficulty": "hard",
+    "label_type": "unanswerable",
+    "table_csv": "Route,Distance_km,Scenic,Traffic\nRoute A,30,High,Low\nRoute B,25,Low,High\nRoute C,28,Medium,Low\nRoute D,22,Low,Very High",
+    "question": "Which route is the best to take?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Best route depends on whether the driver values shorter distance, scenery, or traffic avoidance, which are not weighted."
+})
+
+items.append({
+    "id": "bwv2_185",
+    "difficulty": "hard",
+    "label_type": "unanswerable",
+    "table_csv": "Job,Salary,Work_Life_Balance,Growth\nJob A,High,Poor,High\nJob B,Medium,Good,Medium\nJob C,Low,Excellent,Low\nJob D,High,Fair,Low",
+    "question": "Which job offer should I accept?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "The best job depends on individual priorities among salary, work-life balance, and growth, which are not ranked."
+})
+
+# ============================================================
+# UNANSWERABLE: incomplete_agg (15 items, bwv2_186 to bwv2_200)
+# ============================================================
+
+items.append({
+    "id": "bwv2_186",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Name,Department,Salary\nAlice,Engineering,95000\nBob,Marketing,\nCarol,Engineering,88000\nDave,HR,65000",
+    "question": "What is the average salary of all employees?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Bob's salary is missing, making the average salary across all employees incalculable."
+})
+
+items.append({
+    "id": "bwv2_187",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Student,Score_Math,Score_English,Score_Science\nAna,88,92,85\nBen,75,,90\nCia,95,88,92\nDan,70,75,78",
+    "question": "What is the average English score for all students?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Ben's English score is missing, making the overall average English score incalculable."
+})
+
+items.append({
+    "id": "bwv2_188",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Store,Region,Revenue_M\nStore A,North,5.2\nStore B,South,\nStore C,North,6.1\nStore D,South,3.5",
+    "question": "What is the total revenue across all stores?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Store B's revenue is missing, making the total revenue across all stores incalculable."
+})
+
+items.append({
+    "id": "bwv2_189",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Server,CPU_cores,RAM_GB,Storage_TB\nalpha,16,64,2\nbeta,32,,4\ngamma,8,32,1\ndelta,24,96,3",
+    "question": "What is the average RAM across all servers?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Beta server's RAM is missing, making the average RAM incalculable."
+})
+
+items.append({
+    "id": "bwv2_190",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Country,Gold,Silver,Bronze\nUSA,13,9,7\nChina,9,8,\nGB,4,7,6\nAustralia,4,3,5",
+    "question": "What is the total number of all medals won across all countries?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "China's Bronze medal count is missing, making the grand total incalculable."
+})
+
+items.append({
+    "id": "bwv2_191",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Month,Revenue,Expenses\nJan,50000,30000\nFeb,55000,\nMar,60000,35000\nApr,58000,33000",
+    "question": "What is the total expenses for all months?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "February's expenses are missing, making total expenses incalculable."
+})
+
+items.append({
+    "id": "bwv2_192",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Employee,Bonus_Q1,Bonus_Q2,Bonus_Q3,Bonus_Q4\nMia,1000,1500,1200,1800\nNick,800,,1000,1100\nOlga,2000,2200,2100,2400\nPaul,500,600,550,700",
+    "question": "What is the average quarterly bonus across all employees in Q2?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Nick's Q2 bonus is missing, making the Q2 average across all employees incalculable."
+})
+
+items.append({
+    "id": "bwv2_193",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Flight,Passengers,Cargo_kg\nAA101,180,2500\nBA202,,3100\nEK303,350,5000\nQF404,270,3800",
+    "question": "What is the total number of passengers on all flights?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "BA202's passenger count is missing, making the total incalculable."
+})
+
+items.append({
+    "id": "bwv2_194",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Product,Jan_Sales,Feb_Sales,Mar_Sales\nWidget A,200,250,220\nWidget B,150,180,\nWidget C,300,320,310\nWidget D,100,120,110",
+    "question": "What is the total March sales for all products?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Widget B's March sales are missing, making the total March sales incalculable."
+})
+
+items.append({
+    "id": "bwv2_195",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Patient,LOS_days,Daily_Cost\nAdams,3,500\nBrown,5,\nClark,7,600\nDavis,10,450",
+    "question": "What is the average daily cost across all patients?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Brown's daily cost is missing, making the average daily cost incalculable."
+})
+
+items.append({
+    "id": "bwv2_196",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Department,Headcount,Budget_K\nEngineering,25,500\nMarketing,,200\nHR,8,100\nSales,30,400",
+    "question": "What is the total headcount across all departments?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Marketing's headcount is missing, making the total incalculable."
+})
+
+items.append({
+    "id": "bwv2_197",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Year,Exports_B,Imports_B\n2020,1200,1100\n2021,1350,\n2022,1500,1400\n2023,1600,1500",
+    "question": "What is the total imports across all years?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "2021 imports are missing, making total imports across all years incalculable."
+})
+
+items.append({
+    "id": "bwv2_198",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Sensor,Day1,Day2,Day3,Day4\nS1,22.1,23.0,,21.8\nS2,20.5,21.0,22.0,20.0\nS3,19.0,20.5,21.5,19.5\nS4,23.0,24.0,23.5,22.5",
+    "question": "What is the average Day3 temperature reading across all sensors?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "S1's Day3 reading is missing, making the Day3 average across all sensors incalculable."
+})
+
+items.append({
+    "id": "bwv2_199",
+    "difficulty": "hard",
+    "label_type": "unanswerable",
+    "table_csv": "Team,Q1_Points,Q2_Points,Q3_Points,Q4_Points\nEagles,24,17,,21\nFalcons,14,20,18,17\nHawks,21,14,19,16\nOwls,10,12,15,8",
+    "question": "What is the Eagles' total points for the season?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "Eagles' Q3 points are missing, making their season total incalculable."
+})
+
+items.append({
+    "id": "bwv2_200",
+    "difficulty": "medium",
+    "label_type": "unanswerable",
+    "table_csv": "Machine,Energy_kWh_Mon,Energy_kWh_Tue,Energy_kWh_Wed,Energy_kWh_Thu\nM1,120,135,128,\nM2,200,210,195,205\nM3,80,90,85,88\nM4,150,160,145,155",
+    "question": "What is the total weekly energy consumption for all machines?",
+    "gold_decision": "abstain",
+    "acceptable_answers": [],
+    "reason": "M1's Thursday energy consumption is missing, making the total weekly sum incalculable."
+})
+
+# Output as JSONL
+for item in items:
+    print(json.dumps(item, ensure_ascii=False))
