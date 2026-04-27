@@ -97,6 +97,57 @@ Tested across three prompt formulations (original, rephrased, compact) on every 
 - **Missed Certainty Rate** — determinate items wrongly flagged as underdetermined (~0 across all models)
 - **Object-Meta Mismatch** — cases where Stage 1 reasoning contradicts Stage 2 label
 
+## Development Journey
+
+BoundaryBench is the result of 27 days of iteration. The benchmark went through seven major versions, three taxonomy revisions, four model evaluation rounds, and a 10-reviewer validation pass before final submission.
+
+| Version | Milestone | Notes |
+|---|---|---|
+| **v1** | 10-item pilot | Single-stage abstain prompts; revealed instruction-following collapse |
+| **v2** | Two-stage design introduced | Forced answer + boundary judgment; 24 → 50 items |
+| **v3–v4** | Scale | 50 → 500 items, ~50 per failure family |
+| **v5** | Robustness | 3 prompt variants tested on 250 abstain items |
+| **v6** | Multi-model execution | Qwen 3, Sonnet 4.6, Sonnet 4, Flash on Kaggle Benchmarks |
+| **v7** | 10-reviewer audit + fixes | Final submission frozen |
+
+### 10-Reviewer Validation
+
+Before submission, the benchmark was put through a structured five-round audit by ten expert personas:
+
+**Internal stakeholder reviewers** (rubric-aligned):
+- Dataset Quality Judge (50% rubric weight) — found the table_csv newline bug
+- Writeup Quality Judge (20%) — pushed tone-down on overclaims
+- Discriminatory Power Judge (30%) — demanded cross-model breakdown + CIs
+- Technical Code Judge — flagged assertion-after-scoring bug
+- Head Judge / Grand Prize — framed novelty vs execution gap trade-off
+
+**External evaluator reviewers** (independent):
+- ML Researcher — required real academic citations (TruthfulQA, SelfAware, Kadavath)
+- AI Safety Researcher — questioned surface heuristic confounds
+- Competing Participant — attacked real-entity contamination in `no_satisfying_row`
+- Data Quality Specialist — found structural bias (3-row → 100% abstain)
+- Kaggle Grandmaster — drove cover image redesign and narrative hook
+
+Across 50 review rounds the panel surfaced 14 critical/major issues and 9 minor issues. All critical fixes shipped before submission.
+
+### Engineering Improvements (v6 → v7)
+
+| Severity | Fix | Impact |
+|---|---|---|
+| **Critical** | `table_csv` newline normalization (97/500 items) | ~20% of tables previously rendered as a single line, biased toward abstain (71/97). Fix removes a systematic confound. |
+| **Critical** | Failure family taxonomy split | `ordering_ambiguity` (51 items, 48 of them multi-criteria preference) split into 3 true ordering + 48 `criterion_underspecification`. |
+| **Major** | Defensive scoring + assertion order | v6 ran assertions *after* scoring; v7 reorders so unexpected boundary decisions don't silently mis-score. |
+| **Major** | `answer_matches` numeric fallback | "23.0" now matches "23". Affects 113 numeric-answer items. |
+| **Major** | Robustness: per-item agreement | Reports fraction of items with identical boundary decision across all 3 prompt variants. Result: 100% on every model. |
+| Minor | `bwv2_013` column rename | "score" → "time_s" to disambiguate "best sprint score" |
+| Minor | `label_type` analysis deprecated | Routed all per-family output through `failure_family` only |
+
+### What Could Not Be Fixed In Time
+
+- **Gemini 2.5 Pro** quota-exhausted after ~26 min of thinking-token spend (HTTP 403). Excluded from results.
+- **Human baseline** not collected — documented as future work.
+- **Adversarial table-size variation** (e.g., 5-row determinate items, 3-row determinate items) scoped but not built.
+
 ## Limitations
 
 - Tables are intentionally small (3–5 rows) to isolate boundary judgment; results may not transfer to larger, noisier data.
