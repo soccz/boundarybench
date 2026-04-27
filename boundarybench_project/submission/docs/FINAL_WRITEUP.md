@@ -30,17 +30,18 @@ For determinate items, success requires both a correct answer and a `determinate
 The dataset contains 500 items, all synthetic and authored for this benchmark. This reduces contamination risk from memorized public QA sets and keeps every label auditable. The dataset was constructed in multiple rounds with automated and manual quality audits between each round.
 
 - 250 determinate items (single lookup, filter+compare, aggregation)
-- 250 underdetermined items, uniformly distributed across five failure families:
+- 250 underdetermined items across six failure families:
 
 | Failure family | Items | Description |
 |----------------|-------|-------------|
 | missing_value | 50 | A cell needed for the answer is blank |
 | no_satisfying_row | 50 | The information needed is genuinely absent from the table |
-| tie | 50 | Multiple rows share the exact same top value |
-| ordering_ambiguity | 50 | Question requires combining criteria with no defined weighting |
+| tie | 49 | Multiple rows share the exact same top value |
+| criterion_underspecification | 48 | Question requires combining criteria with no defined weighting |
+| ordering_ambiguity | 3 | Temporal or sequence ordering is ambiguous |
 | incomplete_agg | 50 | A missing cell blocks a required aggregation |
 
-This uniform distribution enables statistically meaningful per-family analysis. With 50 items per family, differences of 10 percentage points or more in false certainty rate are detectable with high confidence.
+The five larger families (48–50 items each) enable statistically meaningful per-family analysis. Differences of 10 percentage points or more in false certainty rate are detectable with reasonable confidence at these sample sizes.
 
 ## Technical Details
 
@@ -73,27 +74,27 @@ The 0.20 spread across five models confirms strong discriminatory power. Notably
 
 ### False Certainty by Failure Family
 
-This is the central finding. False certainty is not uniformly distributed — it follows a steep hierarchy across failure families (n≈50 per family):
+One notable finding is that false certainty is not uniformly distributed — it follows a steep hierarchy across failure families:
 
-| Failure family | FC rate |
-|----------------|---------|
-| no_satisfying_row | **0.940** |
-| missing_value | **0.700** |
-| incomplete_agg | 0.200 |
-| tie | 0.122 |
-| ordering_ambiguity | 0.118 |
+| Failure family | n | FC rate |
+|----------------|---|---------|
+| no_satisfying_row | 50 | **0.940** |
+| missing_value | 50 | **0.700** |
+| incomplete_agg | 50 | 0.200 |
+| tie | 49 | 0.122 |
+| criterion_underspecification | 48 | 0.118 |
 
-When the table lacks information needed to answer the question, the model commits to `determinate` 94% of the time. When a required cell is blank, the rate is 70%. But when the problem is structural ambiguity — tied values or undefined orderings — the model detects it reliably.
+When the table lacks information needed to answer the question, the model commits to `determinate` 94% of the time. When a required cell is blank, the rate is 70%. But when the problem is structural ambiguity — tied values or underspecified criteria — the model detects it more reliably.
 
-This hierarchy reveals that false certainty is primarily a failure of **absence detection**, not ambiguity detection. Models can recognize when two candidates tie for first place, but they struggle to recognize when the evidence needed to answer simply is not present. This distinction is invisible to any benchmark that reports only aggregate accuracy.
+This hierarchy suggests that false certainty in this benchmark is primarily a failure of **absence detection** rather than ambiguity detection. Models can recognize when two candidates tie for first place, but they struggle to recognize when the evidence needed to answer is not present. This pattern would be missed by benchmarks that evaluate answer correctness alone.
 
 ### Confidence Calibration
 
-False certainty cases show average boundary confidence of **0.995**, compared to 0.985 for correct cases. The model is more confident when it is wrong. This means confidence scores cannot be used as a post-hoc filter for overcommitment — the model's own uncertainty signal is inverted precisely where it matters most.
+False certainty cases show average boundary confidence of **0.995**, compared to 0.985 for correct cases. The model tends to be slightly more confident when it is wrong. In this benchmark, confidence did not reliably distinguish false-certainty cases from correct ones — the model's own uncertainty signal does not help filter overcommitment.
 
 ### Robustness Across Prompt Variants
 
-The false certainty signal was tested across three distinct prompt formulations (original, rephrased, compact). All three produce identical false certainty rates (0.428, std=0.000). The signal is completely prompt-invariant, confirming it reflects a genuine model property rather than sensitivity to wording.
+The false certainty signal was tested across three distinct prompt formulations (original, rephrased, compact). Across these variants, false certainty rates were stable (0.428, std=0.000 in our runs), suggesting the signal is not primarily driven by prompt wording. While three variants do not exhaustively rule out prompt sensitivity, the consistency supports the interpretation that this reflects a model property rather than an artifact of specific phrasing.
 
 ### Object-Meta Mismatch
 
@@ -102,7 +103,7 @@ In 104 out of 250 underdetermined items (41.6%), the model's answer text explici
 - `bwv2_006`: Answer says "None of the animals in the table are black" → boundary: `determinate` (conf=1.00)
 - `bwv2_007`: Answer says "battery hours not available in the table" → boundary: `determinate` (conf=1.00)
 
-The model correctly reasons about the absence at the object level, then asserts certainty at the meta level. This dissociation between object-level reasoning and meta-level judgment is the most striking failure pattern, and it cannot be detected by benchmarks that only evaluate answer correctness.
+The model correctly reasons about the absence at the object level, then asserts certainty at the meta level. This dissociation between object-level reasoning and meta-level judgment is a notable failure pattern that would not surface in benchmarks evaluating only answer correctness.
 
 ### Conclusion
 
